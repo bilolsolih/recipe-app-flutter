@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/categories/data/repositories/categories_repository.dart';
-import 'package:recipe_app/categories/presentation/pages/categories.dart';
+import 'package:recipe_app/categories/presentation/pages/categories_view.dart';
 import 'package:recipe_app/categories/presentation/pages/categories_view_model.dart';
 import 'package:recipe_app/categories_detail/data/models/recipe_model_small.dart';
 import 'package:recipe_app/categories_detail/data/repositories/categories_detail_repository.dart';
