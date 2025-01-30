@@ -1,42 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:recipe_app/categories/data/models/category_model.dart';
 import 'package:recipe_app/core/core.dart';
+import 'package:recipe_app/core/presentation/widgets/categories_horizontal_appbar_bottom.dart';
+import 'package:recipe_app/home/presentation/widgets/recipe_home_app_bar_title.dart';
 
-import 'categories_horizontal_appbar_bottom.dart';
-
-class RecipeAppbarCatDetail extends StatelessWidget implements PreferredSizeWidget {
-  const RecipeAppbarCatDetail({
+class RecipeHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const RecipeHomeAppBar({
     super.key,
     required this.title,
+    required this.subtitle,
     required this.categories,
     required this.selected,
   });
 
-  final String title;
   final List<CategoryModel> categories;
-  final CategoryModel selected;
+  final CategoryModel? selected;
+  final String title, subtitle;
 
   @override
-  Size get preferredSize => const Size(double.infinity, 132);
+  Size get preferredSize => const Size(double.infinity, 110);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSizes.padding38, vertical: 0),
+      padding: EdgeInsets.symmetric(horizontal: AppSizes.padding36),
       child: AppBar(
-        toolbarHeight: 132,
-        leadingWidth: 20,
-        leading: RecipeIconButton(
-          callback: () => context.pop(),
-          image: "assets/icons/back-arrow.svg",
-          width: 30,
-          height: 14,
-        ),
-        centerTitle: true,
-        title: Text(
-          title,
-          style: TextStyles.appBarTitleStyle,
+        toolbarHeight: 70,
+        leadingWidth: double.infinity,
+        leading: RecipeHomeAppBarTitle(
+          title: title,
+          subtitle: subtitle,
         ),
         actions: [
           RecipeIconButtonContainer(
@@ -49,7 +42,7 @@ class RecipeAppbarCatDetail extends StatelessWidget implements PreferredSizeWidg
             image: "assets/icons/search.svg",
             color: AppColors.pinkSub,
             callback: () {},
-          )
+          ),
         ],
         bottom: CategoriesHorizontalScrollBar(
           categories: categories,

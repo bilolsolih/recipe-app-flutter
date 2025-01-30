@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  static String home = '13.232.186.30';
-  static String najot = '10.10.';
-  Dio dio = Dio(BaseOptions(baseUrl: "http://$home:8888/api/v1"));
+  Dio dio = Dio(BaseOptions(baseUrl: "http://192.168.1.80/api/v1", followRedirects: false));
 
   Future<List<dynamic>> fetchCategories() async {
     var response = await dio.get('/categories/list');
@@ -23,3 +21,7 @@ class ApiClient {
     return data;
   }
 }
+
+// tight-coupling vs loose-coupling
+
+// SOLID

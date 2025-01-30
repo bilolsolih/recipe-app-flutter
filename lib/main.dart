@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/categories/data/repositories/categories_repository.dart';
-import 'package:recipe_app/categories/presentation/pages/categories_view.dart';
-import 'package:recipe_app/categories/presentation/pages/categories_view_model.dart';
-import 'package:recipe_app/categories_detail/data/models/recipe_model_small.dart';
-import 'package:recipe_app/categories_detail/data/repositories/categories_detail_repository.dart';
-import 'package:recipe_app/categories_detail/presentation/pages/categories_detail.dart';
-import 'package:recipe_app/categories_detail/presentation/pages/categories_detail_view_model.dart';
 import 'package:recipe_app/recipe_detail/data/repositories/recipe_detail_repository.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
 
 import 'categories/data/models/category_model.dart';
+import 'categories/data/repositories/categories_repository.dart';
+import 'categories/presentation/pages/categories_view.dart';
+import 'categories/presentation/pages/categories_view_model.dart';
+import 'categories_detail/data/models/recipe_model_small.dart';
+import 'categories_detail/data/repositories/categories_detail_repository.dart';
+import 'categories_detail/presentation/pages/categories_detail.dart';
+import 'categories_detail/presentation/pages/categories_detail_view_model.dart';
 import 'core/core.dart';
+import 'home/presentation/pages/home_view.dart';
+import 'home/presentation/pages/home_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,8 +25,14 @@ void main() {
 }
 
 GoRouter router = GoRouter(
-  initialLocation: '/categories',
+  initialLocation: '/',
   routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => HomeView(
+        viewModel: HomeViewModel(catsRepo: context.read()),
+      ),
+    ),
     GoRoute(
       path: '/categories',
       builder: (context, state) => CategoriesView(
@@ -66,7 +74,7 @@ class RecipeApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (context) => ApiClient()),
-        Provider(create: (context) => CategoriesRepository(client: context.read())),
+        Provider(create: (context) => CategoriesRepository(client: context.read<ApiClient>())),
         Provider(create: (context) => CategoriesDetailRepository(client: context.read())),
         Provider(create: (context) => RecipeDetailRepository(client: context.read())),
       ],

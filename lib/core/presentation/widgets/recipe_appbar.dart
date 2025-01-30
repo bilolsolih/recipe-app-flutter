@@ -32,13 +32,13 @@ class RecipeAppbar extends StatelessWidget implements PreferredSizeWidget {
           style: TextStyles.appBarTitleStyle,
         ),
         actions: [
-          RecipeAppBarAction(
+          RecipeIconButtonContainer(
             image: "assets/icons/notification.svg",
             color: AppColors.pinkSub,
             callback: () {},
           ),
           SizedBox(width: 5),
-          RecipeAppBarAction(
+          RecipeIconButtonContainer(
             image: "assets/icons/search.svg",
             color: AppColors.pinkSub,
             callback: () {},

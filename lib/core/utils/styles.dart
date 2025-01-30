@@ -27,4 +27,16 @@ class TextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w600,
   );
+
+  static const homeSectionTitleRedPink = TextStyle(
+    color: AppColors.redPinkMain,
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const homeSectionTitleWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+  );
 }

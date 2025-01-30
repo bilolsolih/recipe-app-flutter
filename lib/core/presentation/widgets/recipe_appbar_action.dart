@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 import 'recipe_icon_button.dart';
 
-class RecipeAppBarAction extends StatelessWidget {
-  const RecipeAppBarAction({
+class RecipeIconButtonContainer extends StatelessWidget {
+  const RecipeIconButtonContainer({
     super.key,
     this.color = AppColors.redPinkMain,
     required this.image,
