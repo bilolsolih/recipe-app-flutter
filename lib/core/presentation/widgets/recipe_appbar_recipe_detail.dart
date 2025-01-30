@@ -34,7 +34,7 @@ class RecipeAppbarDetail extends StatelessWidget implements PreferredSizeWidget 
         actions: [
           RecipeIconButtonContainer(
             image: "assets/icons/heart.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             iconWidth: 16,
             iconHeight: 16,
             callback: () {},
@@ -42,7 +42,7 @@ class RecipeAppbarDetail extends StatelessWidget implements PreferredSizeWidget 
           SizedBox(width: 5),
           RecipeIconButtonContainer(
             image: "assets/icons/share.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             iconWidth: 16,
             iconHeight: 16,
             callback: () {},

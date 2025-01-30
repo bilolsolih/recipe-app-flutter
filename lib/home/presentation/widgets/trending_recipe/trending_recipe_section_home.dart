@@ -16,7 +16,7 @@ class TrendingRecipeSectionHome extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Trending Recipe", style: TextStyles.homeSectionTitleRedPink),
-          TrendingRecipeHome(),
+          TrendingRecipeItemHome(),
         ],
       ),
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:recipe_app/core/data/repositories/recipe_repository.dart';
+import 'package:recipe_app/core/data/repositories/top_chef_repository.dart';
 import 'package:recipe_app/recipe_detail/data/repositories/recipe_detail_repository.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
@@ -29,9 +31,7 @@ GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => HomeView(
-        viewModel: HomeViewModel(catsRepo: context.read()),
-      ),
+      builder: (context, state) => HomeView(),
     ),
     GoRoute(
       path: '/categories',
@@ -77,6 +77,8 @@ class RecipeApp extends StatelessWidget {
         Provider(create: (context) => CategoriesRepository(client: context.read<ApiClient>())),
         Provider(create: (context) => CategoriesDetailRepository(client: context.read())),
         Provider(create: (context) => RecipeDetailRepository(client: context.read())),
+        Provider(create: (context) => RecipeRepository(client: context.read())),
+        Provider(create: (context) => TopChefRepository(client: context.read())),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -5,7 +5,6 @@ import 'colors.dart';
 final ThemeData appThemeData = ThemeData(
   scaffoldBackgroundColor: AppColors.beigeColor,
   fontFamily: 'Poppins',
-
   colorScheme: ColorScheme(
     brightness: Brightness.dark,
     primary: AppColors.redPinkMain,

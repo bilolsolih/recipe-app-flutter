@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_app/categories/data/models/category_model.dart';
 import 'package:recipe_app/core/core.dart';
 import 'package:recipe_app/core/presentation/widgets/categories_horizontal_appbar_bottom.dart';
 import 'package:recipe_app/home/presentation/widgets/recipe_home_app_bar_title.dart';
+
+import '../pages/home_view_model.dart';
 
 class RecipeHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RecipeHomeAppBar({
     super.key,
     required this.title,
     required this.subtitle,
-    required this.categories,
-    required this.selected,
   });
 
-  final List<CategoryModel> categories;
-  final CategoryModel? selected;
   final String title, subtitle;
 
   @override
@@ -22,6 +21,8 @@ class RecipeHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var categories = context.select<HomeViewModel, List<CategoryModel>>((value) => value.categories);
+    var selected = context.select<HomeViewModel, CategoryModel?>((value) => value.selected);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppSizes.padding36),
       child: AppBar(
@@ -34,13 +35,13 @@ class RecipeHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           RecipeIconButtonContainer(
             image: "assets/icons/notification.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             callback: () {},
           ),
           SizedBox(width: 5),
           RecipeIconButtonContainer(
             image: "assets/icons/search.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             callback: () {},
           ),
         ],

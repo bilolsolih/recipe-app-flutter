@@ -6,7 +6,8 @@ import 'recipe_icon_button.dart';
 class RecipeIconButtonContainer extends StatelessWidget {
   const RecipeIconButtonContainer({
     super.key,
-    this.color = AppColors.redPinkMain,
+    this.iconColor = AppColors.redPinkMain,
+    this.containerColor = AppColors.pink,
     required this.image,
     required this.callback,
     this.iconWidth = 12,
@@ -14,7 +15,7 @@ class RecipeIconButtonContainer extends StatelessWidget {
   });
 
   final String image;
-  final Color color;
+  final Color iconColor, containerColor;
 
   final double iconWidth, iconHeight;
 
@@ -26,14 +27,14 @@ class RecipeIconButtonContainer extends StatelessWidget {
       width: 28,
       height: 28,
       decoration: BoxDecoration(
-        color: AppColors.pink,
+        color: containerColor,
         borderRadius: BorderRadius.circular(14),
       ),
       child: RecipeIconButton(
         image: image,
         width: iconWidth,
         height: iconHeight,
-        color: color,
+        color: iconColor,
         callback: callback,
       ),
     );

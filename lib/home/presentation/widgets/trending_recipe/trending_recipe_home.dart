@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/core/core.dart';
 import 'package:recipe_app/home/presentation/widgets/trending_recipe/trending_recipe_bottom.dart';
 
-class TrendingRecipeHome extends StatelessWidget {
-  const TrendingRecipeHome({
+class TrendingRecipeItemHome extends StatelessWidget {
+  const TrendingRecipeItemHome({
     super.key,
   });
 

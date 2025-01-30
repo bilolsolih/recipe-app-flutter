@@ -3,8 +3,6 @@ import 'package:recipe_app/categories_detail/data/models/recipe_model_small.dart
 import 'package:recipe_app/categories_detail/presentation/pages/categories_detail_view_model.dart';
 import 'package:recipe_app/core/core.dart';
 
-import '../widgets/category_item.dart';
-
 class CategoriesDetailView extends StatelessWidget {
   const CategoriesDetailView({
     super.key,

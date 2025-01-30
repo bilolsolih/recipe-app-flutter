@@ -41,13 +41,13 @@ class RecipeAppbarCatDetail extends StatelessWidget implements PreferredSizeWidg
         actions: [
           RecipeIconButtonContainer(
             image: "assets/icons/notification.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             callback: () {},
           ),
           SizedBox(width: 5),
           RecipeIconButtonContainer(
             image: "assets/icons/search.svg",
-            color: AppColors.pinkSub,
+            iconColor: AppColors.pinkSub,
             callback: () {},
           )
         ],
