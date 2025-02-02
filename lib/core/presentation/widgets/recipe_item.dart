@@ -35,7 +35,7 @@ class RecipeItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Lemonade",
+                    recipe.title,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -44,7 +44,7 @@ class RecipeItem extends StatelessWidget {
                   SizedBox(
                     width: 129 * AppSizes.wRatio,
                     child: Text(
-                      "Acidic and refreshing",
+                      recipe.desc,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -60,8 +60,8 @@ class RecipeItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RecipeRating(rating: 4),
-                      RecipeTime(time: 30),
+                      RecipeRating(rating: recipe.rating),
+                      RecipeTime(time: recipe.time),
                     ],
                   ),
                 ],
@@ -77,7 +77,7 @@ class RecipeItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(14),
               child: Image.asset(
-                "assets/images/salami_pizza.png",
+                recipe.image,
                 width: 169 * AppSizes.wRatio,
                 height: 153 * AppSizes.hRatio,
                 fit: BoxFit.cover,
@@ -89,7 +89,8 @@ class RecipeItem extends StatelessWidget {
             right: 8,
             child: RecipeIconButtonContainer(
               image: 'assets/icons/heart.svg',
-              iconColor: AppColors.pinkSub,
+              iconColor: recipe.isLiked ? Colors.white : AppColors.pinkSub,
+              containerColor: recipe.isLiked ? AppColors.redPinkMain : AppColors.pink,
               callback: () {},
             ),
           ),

@@ -5,9 +5,7 @@ import 'package:recipe_app/core/core.dart';
 import 'package:recipe_app/home/presentation/pages/home_view_model.dart';
 
 class RecentlyAddedSectionHome extends StatelessWidget {
-  const RecentlyAddedSectionHome({
-    super.key,
-  });
+  const RecentlyAddedSectionHome({super.key});
 
   @override
   Widget build(BuildContext context) {

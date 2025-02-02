@@ -12,7 +12,7 @@ class RecipeBottomNavigationBar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       children: [
         Positioned(
-          child: _BottomNavigationBarShadow(),
+          child: BottomShadow(),
         ),
         Positioned(
           bottom: 36,
@@ -45,7 +45,7 @@ class _BottomNavigationBarVanilla extends StatelessWidget {
             width: 25,
             height: 22,
             color: Colors.white,
-            callback: ()=> context.go('/'),
+            callback: () => context.go('/'),
           ),
           RecipeIconButton(
             image: "assets/icons/community.svg",
@@ -69,25 +69,6 @@ class _BottomNavigationBarVanilla extends StatelessWidget {
             callback: () {},
           )
         ],
-      ),
-    );
-  }
-}
-
-class _BottomNavigationBarShadow extends StatelessWidget {
-  const _BottomNavigationBarShadow({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 100,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.black, Colors.transparent],
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-        ),
       ),
     );
   }

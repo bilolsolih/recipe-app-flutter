@@ -10,6 +10,9 @@ export 'presentation/widgets/recipe_rating.dart';
 export 'presentation/widgets/recipe_reviews.dart';
 export 'presentation/widgets/recipe_svg_image.dart';
 export 'presentation/widgets/recipe_time.dart';
+export 'presentation/widgets/bottom_shadow.dart';
+export 'presentation/widgets/recipe_elevated_button.dart';
+
 export 'utils/colors.dart';
 export 'utils/sizes.dart';
 export 'utils/styles.dart';

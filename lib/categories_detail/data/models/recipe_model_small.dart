@@ -2,7 +2,7 @@ class RecipeModelSmall {
   final int id;
   final String image, title, desc;
   final int time;
-  final double? rating;
+  final double rating;
   final bool isLiked;
 
   RecipeModelSmall({

@@ -39,18 +39,19 @@ class CategoriesPageBody extends StatelessWidget {
         listenable: viewModel,
         builder: (context, _) {
           return ListView(
-            padding: EdgeInsets.fromLTRB(38 * AppSizes.wRatio, 20, 38 * AppSizes.wRatio, 10),
+            padding: EdgeInsets.fromLTRB(AppSizes.padding38, 20, AppSizes.padding38, 10),
             children: [
               if (viewModel.mainCategory != null)
                 CategoryItem(
                   category: viewModel.mainCategory!,
-                  width: 356,
+                  width: 356 * AppSizes.wRatio,
                   height: 148,
                   main: true,
                 ),
               SizedBox(height: 16),
               GridView.builder(
                 physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

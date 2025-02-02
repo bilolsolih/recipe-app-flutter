@@ -1,7 +1,13 @@
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  Dio dio = Dio(BaseOptions(baseUrl: "http://192.168.1.80/api/v1", followRedirects: false));
+  Dio dio = Dio(BaseOptions(baseUrl: "http://10.10.3.220/api/v1", followRedirects: false));
+
+  Future<List<dynamic>> fetchOnboardingPages() async {
+    var response = await dio.get('/onboarding/list');
+    List<dynamic> data = response.data;
+    return data;
+  }
 
   Future<dynamic> fetchTrendingRecipe() async {
     return {
@@ -10,7 +16,7 @@ class ApiClient {
       "description": "This is a quick overview of the ingredients for the recipe",
       "photo": "assets/images/salami_pizza.png",
       "timeRequired": 30,
-      "rating": 5,
+      "rating": 5.0,
       "isLiked": true,
     };
   }
@@ -46,7 +52,7 @@ class ApiClient {
         "description": "This is a quick overview of the ingredients for the recipe",
         "photo": "assets/images/salami_pizza.png",
         "timeRequired": 30,
-        "rating": 4,
+        "rating": 4.0,
         "isLiked": false,
       },
       {

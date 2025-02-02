@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/data/repositories/recipe_repository.dart';
 import 'package:recipe_app/core/data/repositories/top_chef_repository.dart';
+import 'package:recipe_app/onboarding/data/repositories/onboarding_repository.dart';
+import 'package:recipe_app/onboarding/presentation/pages/onboarding_view.dart';
+import 'package:recipe_app/onboarding/presentation/pages/onboarding_view_model.dart';
 import 'package:recipe_app/recipe_detail/data/repositories/recipe_detail_repository.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
@@ -27,11 +30,17 @@ void main() {
 }
 
 GoRouter router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/onboarding',
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) => HomeView(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => OnboardingView(
+        vm: OnboardingViewModel(repo: context.read()),
+      ),
     ),
     GoRoute(
       path: '/categories',
@@ -74,6 +83,7 @@ class RecipeApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (context) => ApiClient()),
+        Provider(create: (context)=> OnboardingRepository(client: context.read())),
         Provider(create: (context) => CategoriesRepository(client: context.read<ApiClient>())),
         Provider(create: (context) => CategoriesDetailRepository(client: context.read())),
         Provider(create: (context) => RecipeDetailRepository(client: context.read())),
