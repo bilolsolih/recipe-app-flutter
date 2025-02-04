@@ -45,13 +45,12 @@ class CategoriesDetailBody extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 169 / 230,
+        childAspectRatio: 169 / 226,
+        mainAxisSpacing: 10
       ),
       itemCount: recipes.length,
       padding: EdgeInsets.fromLTRB(AppSizes.padding38, 10, AppSizes.padding38, 100),
-      itemBuilder: (context, index) => RecipeItem(
-        recipe: recipes[index],
-      ),
+      itemBuilder: (context, index) => RecipeItem(recipe: recipes[index]),
     );
   }
 }

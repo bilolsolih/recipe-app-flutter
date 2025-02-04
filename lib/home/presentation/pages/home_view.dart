@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/core.dart';
-import 'package:recipe_app/home/presentation/pages/recently_added_section_home.dart';
+import 'package:recipe_app/home/presentation/widgets/recently_added_section_home.dart';
 
 import '../widgets/recipe_home_app_bar.dart';
 import '../widgets/top_chefs_section_home.dart';

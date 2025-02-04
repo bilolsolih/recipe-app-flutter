@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class ApiClient {
-  Dio dio = Dio(BaseOptions(baseUrl: "http://10.10.3.220/api/v1", followRedirects: false));
+  Dio dio = Dio(BaseOptions(baseUrl: "http://10.10.2.115/api/v1"));
 
   Future<List<dynamic>> fetchOnboardingPages() async {
     var response = await dio.get('/onboarding/list');
@@ -22,26 +22,9 @@ class ApiClient {
   }
 
   Future<List<dynamic>> fetchYourRecipes(int limit) async {
-    return [
-      {
-        "id": 1,
-        "title": "Tiramisu",
-        "description": "This is a quick overview of the ingredients for the recipe",
-        "photo": "assets/images/salami_pizza.png",
-        "timeRequired": 15,
-        "rating": 4.3,
-        "isLiked": false,
-      },
-      {
-        "id": 2,
-        "title": "Chicken Burger",
-        "description": "This is a quick overview of the ingredients for the recipe",
-        "photo": "assets/images/salami_pizza.png",
-        "timeRequired": 15,
-        "rating": 4.8,
-        "isLiked": true,
-      },
-    ];
+    var response = await dio.get('/recipes/list?Category=1&Limit=$limit');
+    List<dynamic> data = response.data;
+    return data;
   }
 
   Future<List<dynamic>> fetchRecentRecipes(int limit) async {
@@ -83,6 +66,12 @@ class ApiClient {
     var response = await dio.get('/recipes/detail/$recipeId');
     dynamic data = response.data;
     return data;
+  }
+
+  Future<dynamic> fetchMyProfile() async {
+    var response = await dio.get('/auth/details/1');
+
+    return response.data;
   }
 
   Future<List<dynamic>> fetchTopChefs(int limit) async {

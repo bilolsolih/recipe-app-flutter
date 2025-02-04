@@ -7,6 +7,9 @@ import 'package:recipe_app/core/data/repositories/top_chef_repository.dart';
 import 'package:recipe_app/onboarding/data/repositories/onboarding_repository.dart';
 import 'package:recipe_app/onboarding/presentation/pages/onboarding_view.dart';
 import 'package:recipe_app/onboarding/presentation/pages/onboarding_view_model.dart';
+import 'package:recipe_app/profile/data/repositories/profile_repository.dart';
+import 'package:recipe_app/profile/presentation/pages/profile_view.dart';
+import 'package:recipe_app/profile/presentation/pages/profile_view_model.dart';
 import 'package:recipe_app/recipe_detail/data/repositories/recipe_detail_repository.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
@@ -17,11 +20,10 @@ import 'categories/presentation/pages/categories_view.dart';
 import 'categories/presentation/pages/categories_view_model.dart';
 import 'categories_detail/data/models/recipe_model_small.dart';
 import 'categories_detail/data/repositories/categories_detail_repository.dart';
-import 'categories_detail/presentation/pages/categories_detail.dart';
+import 'categories_detail/presentation/pages/categories_detail_view.dart';
 import 'categories_detail/presentation/pages/categories_detail_view_model.dart';
 import 'core/core.dart';
 import 'home/presentation/pages/home_view.dart';
-import 'home/presentation/pages/home_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,7 @@ void main() {
 }
 
 GoRouter router = GoRouter(
-  initialLocation: '/onboarding',
+  initialLocation: '/profile/me',
   routes: [
     GoRoute(
       path: '/',
@@ -44,9 +46,11 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/categories',
-      builder: (context, state) => CategoriesView(
-        viewModel: CategoriesViewModel(repo: context.read()),
-      ),
+      builder: (context, state) {
+        return CategoriesView(
+          viewModel: CategoriesViewModel(repo: context.read()),
+        );
+      },
       routes: [
         GoRoute(
           path: '/detail',
@@ -57,19 +61,23 @@ GoRouter router = GoRouter(
               selected: state.extra as CategoryModel,
             ),
           ),
-          routes: [
-            GoRoute(
-              path: '/recipe',
-              builder: (context, state) => RecipeDetailView(
-                viewModel: RecipeDetailViewModel(
-                  repo: context.read(),
-                  selected: state.extra as RecipeModelSmall,
-                ),
-              ),
-            ),
-          ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/recipe',
+      builder: (context, state) => RecipeDetailView(
+        viewModel: RecipeDetailViewModel(
+          repo: context.read(),
+          selected: state.extra as RecipeModelSmall,
+        ),
+      ),
+    ),
+    GoRoute(
+      path: '/profile/me',
+      builder: (context, state) => ProfileView(
+        vm: ProfileViewModel(repo: context.read()),
+      ),
     ),
   ],
 );
@@ -83,7 +91,8 @@ class RecipeApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (context) => ApiClient()),
-        Provider(create: (context)=> OnboardingRepository(client: context.read())),
+        Provider(create: (context) => ProfileRepository(client: context.read())),
+        Provider(create: (context) => OnboardingRepository(client: context.read())),
         Provider(create: (context) => CategoriesRepository(client: context.read<ApiClient>())),
         Provider(create: (context) => CategoriesDetailRepository(client: context.read())),
         Provider(create: (context) => RecipeDetailRepository(client: context.read())),
