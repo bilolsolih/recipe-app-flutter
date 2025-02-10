@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/auth_repository.dart';
 import 'package:recipe_app/core/auth_view_model.dart';
@@ -46,7 +47,6 @@ class LoginViewContent extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Container(decoration: BoxDecoration(),),
               Column(
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,10 +97,7 @@ class LoginViewContent extends StatelessWidget {
                 text: "Login",
                 callback: () async {
                   if (await vm.submitForm() && context.mounted) {
-                    // context.go('/');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Success")),
-                    );
+                    context.go('/');
                   }
                 },
                 size: const Size(207, 45),

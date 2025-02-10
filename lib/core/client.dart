@@ -17,7 +17,28 @@ class DioInstance {
           return handler.next(options);
         },
         onError: (error, handler) async {
-          if (error.response?.statusCode == 401) {}
+          if (error.response?.statusCode == 401) {
+            final credentials = await SecureStorage.getCredentials();
+            final login = credentials['login'];
+            final password = credentials['password'];
+            if (login == null || password == null) {
+              throw Exception("Credentials not found");
+            }
+            var response = await dio.post(
+              '/auth/login',
+              data: json.encode({"login": login, "password": password}),
+            );
+
+            if (response.statusCode == 200) {
+              final data = Map<String, String>.from(response.data);
+              final newToken = data['accessToken']!;
+              await SecureStorage.deleteToken();
+              await SecureStorage.saveToken(newToken);
+              error.requestOptions.headers['Authorization'] = "Bearer $newToken";
+            } else {
+              throw Exception("User not found");
+            }
+          }
           return handler.next(error);
         },
       ),
@@ -28,20 +49,20 @@ class DioInstance {
 class ApiClient {
   Dio dio = Dio(
     BaseOptions(
-      baseUrl: "http://192.168.1.80/api/v1",
+      baseUrl: "http://10.10.2.73/api/v1",
       validateStatus: (status) => true,
     ),
   );
 
-  Future<Map<String, String>> login(String login, String password) async {
+  Future<String> login(String login, String password) async {
     var response = await dio.post(
       '/auth/login',
-      data: json.encode({"login": login, "password": password}),
+      data: {"login": login, "password": password},
     );
 
     if (response.statusCode == 200) {
       var data = Map<String, String>.from(response.data);
-      return data;
+      return data['accessToken']!;
     } else {
       throw Exception("User not found");
     }

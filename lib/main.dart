@@ -37,7 +37,7 @@ void main() {
 GoRouter createRouter(BuildContext context, AuthViewModel vm) {
   return GoRouter(
     refreshListenable: vm,
-    initialLocation: '/onboarding',
+    initialLocation: '/login',
     routes: [
       GoRoute(
         path: '/',
@@ -92,16 +92,16 @@ GoRouter createRouter(BuildContext context, AuthViewModel vm) {
       ),
     ],
     redirect: (context, state) {
-      final isAuthenticated = vm.isAuthenticated;
-      final isLoggingIn = state.uri.toString() == '/login';
-
-      if (!isAuthenticated && !isLoggingIn) {
-        return '/login';
-      }
-
-      if (isAuthenticated && isLoggingIn) {
-        return '/';
-      }
+      // final isAuthenticated = vm.isAuthenticated;
+      // final isLoggingIn = state.uri.toString() == '/login';
+      //
+      // if (!isAuthenticated && !isLoggingIn) {
+      //   return '/login';
+      // }
+      //
+      // if (isAuthenticated && isLoggingIn) {
+      //   return '/';
+      // }
 
       return null;
     },

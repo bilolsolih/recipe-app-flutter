@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/core/secure_storage.dart';
 
 import 'auth_repository.dart';
 
 class AuthViewModel extends ChangeNotifier {
-  AuthViewModel({
-    required AuthRepository authRepository,
-  }) : _authRepository = authRepository {
-    loadToken();
-  }
-
+  AuthViewModel({required AuthRepository authRepository}) : _authRepository = authRepository;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController loginController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -28,14 +22,6 @@ class AuthViewModel extends ChangeNotifier {
       notifyListeners();
     }
     return _isAuthenticated;
-  }
-
-  Future<void> loadToken() async {
-    final token = await SecureStorage.getToken();
-    if (token != null) {
-      _isAuthenticated = true;
-      notifyListeners();
-    }
   }
 
   Future<void> obtainToken(String login, String password) async {
