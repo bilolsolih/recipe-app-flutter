@@ -8,10 +8,11 @@ class RecipeDetailViewModel extends ChangeNotifier {
   RecipeDetailViewModel({
     required RecipeDetailRepository repo,
     required this.selected,
+    required this.from,
   }) : _repo = repo {
     load();
   }
-
+  final String from;
   final RecipeDetailRepository _repo;
   bool loading = true;
   late RecipeModel recipe;

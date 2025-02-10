@@ -16,14 +16,22 @@ class TopChefItemHome extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(7),
-          child: Image.asset(
+          child: Image.network(
             chef.image,
             width: 83 * AppSizes.wRatio,
             height: 74 * AppSizes.hRatio,
             fit: BoxFit.cover,
           ),
         ),
-        Text(chef.firstName, style: TextStyle(fontSize: 12)),
+        SizedBox(
+          width: 83,
+          child: Text(
+            chef.firstName,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12),
+          ),
+        ),
       ],
     );
   }

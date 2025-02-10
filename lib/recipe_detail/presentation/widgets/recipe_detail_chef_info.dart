@@ -21,7 +21,7 @@ class RecipeDetailChefInfo extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(31),
               child: Image(
-                image: AssetImage("assets/images/edward.png"),
+                image: NetworkImage(user.image),
                 width: 62,
                 height: 62,
                 fit: BoxFit.cover,

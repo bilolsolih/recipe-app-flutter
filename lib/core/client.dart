@@ -1,7 +1,51 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:recipe_app/core/secure_storage.dart';
+
+class DioInstance {
+  final Dio dio = Dio(BaseOptions(baseUrl: "http://192.168.1.80/api/v1"));
+
+  DioInstance() {
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await SecureStorage.getToken();
+          if (token != null) {
+            options.headers['Authorization'] = "Bearer $token";
+          }
+          return handler.next(options);
+        },
+        onError: (error, handler) async {
+          if (error.response?.statusCode == 401) {}
+          return handler.next(error);
+        },
+      ),
+    );
+  }
+}
 
 class ApiClient {
-  Dio dio = Dio(BaseOptions(baseUrl: "http://10.10.2.115/api/v1"));
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: "http://192.168.1.80/api/v1",
+      validateStatus: (status) => true,
+    ),
+  );
+
+  Future<Map<String, String>> login(String login, String password) async {
+    var response = await dio.post(
+      '/auth/login',
+      data: json.encode({"login": login, "password": password}),
+    );
+
+    if (response.statusCode == 200) {
+      var data = Map<String, String>.from(response.data);
+      return data;
+    } else {
+      throw Exception("User not found");
+    }
+  }
 
   Future<List<dynamic>> fetchOnboardingPages() async {
     var response = await dio.get('/onboarding/list');
@@ -22,7 +66,7 @@ class ApiClient {
   }
 
   Future<List<dynamic>> fetchYourRecipes(int limit) async {
-    var response = await dio.get('/recipes/list?Category=1&Limit=$limit');
+    var response = await dio.get('/recipes/list?UserId=1&Limit=$limit');
     List<dynamic> data = response.data;
     return data;
   }
@@ -69,33 +113,14 @@ class ApiClient {
   }
 
   Future<dynamic> fetchMyProfile() async {
-    var response = await dio.get('/auth/details/1');
+    var response = await dio.get('/auth/details/3');
 
     return response.data;
   }
 
   Future<List<dynamic>> fetchTopChefs(int limit) async {
-    return [
-      {
-        "id": 1,
-        "firstName": "Joseph",
-        "photo": "assets/images/edward.png",
-      },
-      {
-        "id": 2,
-        "firstName": "Andrew",
-        "photo": "assets/images/edward.png",
-      },
-      {
-        "id": 3,
-        "firstName": "Emily",
-        "photo": "assets/images/edward.png",
-      },
-      {
-        "id": 4,
-        "firstName": "Jessica",
-        "photo": "assets/images/edward.png",
-      },
-    ];
+    var response = await dio.get('/auth/top-chefs?Limit=$limit');
+    List<dynamic> data = response.data;
+    return data;
   }
 }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_app/core/core.dart';
+import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
 
 class RecipeAppbarDetail extends StatelessWidget implements PreferredSizeWidget {
   const RecipeAppbarDetail({
     super.key,
     required this.title,
+    required this.goBackRoute,
   });
 
   final String title;
+  final String goBackRoute;
 
   @override
   Size get preferredSize => const Size(double.infinity, 61);
@@ -21,7 +25,7 @@ class RecipeAppbarDetail extends StatelessWidget implements PreferredSizeWidget 
         toolbarHeight: 61,
         leadingWidth: 20,
         leading: RecipeIconButton(
-          callback: context.pop,
+          callback: ()=> context.go(goBackRoute),
           image: "assets/icons/back-arrow.svg",
           width: 30,
           height: 14,

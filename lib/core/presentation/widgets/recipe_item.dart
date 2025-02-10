@@ -9,9 +9,11 @@ class RecipeItem extends StatelessWidget {
   const RecipeItem({
     super.key,
     required this.recipe,
+    this.goBackRoute = '/'
   });
 
   final RecipeModelSmall recipe;
+  final String goBackRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class RecipeItem extends StatelessWidget {
         width: 169 * AppSizes.wRatio,
         height: 226 * AppSizes.hRatio,
         child: GestureDetector(
-          onTap: ()=> context.go('/recipe', extra: recipe),
+          onTap: ()=> context.go('/recipe?from=$goBackRoute', extra: recipe),
           child: RecipeItemStack(recipe: recipe),
         ),
       ),

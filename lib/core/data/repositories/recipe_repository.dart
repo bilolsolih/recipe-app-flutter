@@ -6,20 +6,20 @@ class RecipeRepository {
   RecipeRepository({required this.client});
 
   final ApiClient client;
-  List<RecipeModelSmall> yourRecipesHome = [];
+  List<RecipeModelSmall> yourRecipes = [];
   List<RecipeModelSmall> recentRecipes = [];
 
   Future<List<RecipeModelSmall>> fetchYourRecipes(int limit) async {
-    if (yourRecipesHome.isNotEmpty) return yourRecipesHome;
-    var rawRecipes = await client.fetchYourRecipes(2);
-    yourRecipesHome = rawRecipes.map((recipe) => RecipeModelSmall.fromJson(recipe)).toList();
-    return yourRecipesHome;
+    // if (yourRecipes.isNotEmpty) return yourRecipes;
+    var rawRecipes = await client.fetchYourRecipes(limit);
+    yourRecipes = rawRecipes.map((recipe) => RecipeModelSmall.fromJson(recipe)).toList();
+    return yourRecipes;
   }
 
   Future<List<RecipeModelSmall>> fetchRecentRecipes(int limit) async {
-    if (recentRecipes.isNotEmpty) return recentRecipes;
+    // if (recentRecipes.isNotEmpty) return recentRecipes;
 
-    var rawRecipes = await client.fetchRecentRecipes(2);
+    var rawRecipes = await client.fetchRecentRecipes(limit);
     recentRecipes = rawRecipes.map((recipe) => RecipeModelSmall.fromJson(recipe)).toList();
     return recentRecipes;
   }

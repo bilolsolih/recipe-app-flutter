@@ -12,7 +12,7 @@ class TopChefRepository {
   Future<List<TopChefModelSmall>> fetchTopChefs(int limit) async {
     if (topChefsHome.isNotEmpty) return topChefsHome;
 
-    var rawChefs = await client.fetchTopChefs(4);
+    var rawChefs = await client.fetchTopChefs(limit);
     topChefsHome = rawChefs.map((chef) => TopChefModelSmall.fromJson(chef)).toList();
     return topChefsHome;
   }

@@ -39,7 +39,7 @@ class CategoriesPageBody extends StatelessWidget {
         listenable: viewModel,
         builder: (context, _) {
           return ListView(
-            padding: EdgeInsets.fromLTRB(AppSizes.padding38, 20, AppSizes.padding38, 10),
+            padding: EdgeInsets.fromLTRB(AppSizes.padding38, 20, AppSizes.padding38, 100),
             children: [
               if (viewModel.mainCategory != null)
                 CategoryItem(
