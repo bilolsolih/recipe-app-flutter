@@ -17,6 +17,8 @@ class HomeViewModel extends ChangeNotifier {
     load();
   }
 
+  bool isLoading = true;
+
   final CategoriesRepository _catsRepo;
   final RecipeRepository _recipeRepo;
   final TopChefRepository _topChefRepo;
@@ -25,14 +27,20 @@ class HomeViewModel extends ChangeNotifier {
   List<CategoryModel> categories = [];
   List<RecipeModelSmall> yourRecipes = [];
   List<RecipeModelSmall> recentRecipes = [];
+
+  RecipeModelSmall? trendingRecipe;
   List<TopChefModelSmall> topChefsHome = [];
 
   Future<void> load() async {
+    isLoading = true;
+    notifyListeners();
     categories = await _catsRepo.fetchCategories();
+    trendingRecipe = await _recipeRepo.fetchTrendingRecipe();
     yourRecipes = await _recipeRepo.fetchYourRecipes(2);
     topChefsHome = await _topChefRepo.fetchTopChefs(4);
     recentRecipes = await _recipeRepo.fetchRecentRecipes(2);
     selected = categories.firstOrNull;
+    isLoading = false;
     notifyListeners();
   }
 }

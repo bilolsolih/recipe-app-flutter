@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/core/auth_repository.dart';
-import 'package:recipe_app/core/auth_view_model.dart';
-import 'package:recipe_app/core/data/repositories/top_chef_repository.dart';
 import 'package:recipe_app/onboarding/data/repositories/onboarding_repository.dart';
 import 'package:recipe_app/onboarding/presentation/pages/onboarding_view.dart';
-import 'package:recipe_app/onboarding/presentation/manager/onboarding_view_model.dart';
 import 'package:recipe_app/profile/data/repositories/profile_repository.dart';
 import 'package:recipe_app/profile/presentation/pages/profile_view.dart';
-import 'package:recipe_app/profile/presentation/pages/profile_view_model.dart';
+import 'package:recipe_app/profile/presentation/manager/profile_view_model.dart';
 import 'package:recipe_app/recipe_detail/data/repositories/recipe_detail_repository.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view.dart';
 import 'package:recipe_app/recipe_detail/presentation/pages/recipe_detail_view_model.dart';
@@ -26,7 +22,6 @@ import 'categories_detail/presentation/pages/categories_detail_view.dart';
 import 'categories_detail/presentation/pages/categories_detail_view_model.dart';
 import 'core/core.dart';
 import 'home/presentation/pages/home_view.dart';
-import 'core/secure_storage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,79 +29,75 @@ void main() {
   runApp(RecipeApp());
 }
 
-GoRouter createRouter(BuildContext context, AuthViewModel vm) {
-  return GoRouter(
-    refreshListenable: vm,
-    initialLocation: '/login',
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => HomeView(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => LoginView(),
-      ),
-      GoRoute(
-        path: '/onboarding',
-        builder: (context, state) => OnboardingView(),
-      ),
-      GoRoute(
-        path: '/categories',
-        builder: (context, state) {
-          return CategoriesView(
-            viewModel: CategoriesViewModel(repo: context.read()),
-          );
-        },
-        routes: [
-          GoRoute(
-            path: '/detail',
-            builder: (context, state) => CategoriesDetailView(
-              viewModel: CategoriesDetailViewModel(
-                repo: context.read(),
-                catsRepo: context.read(),
-                selected: state.extra as CategoryModel,
-              ),
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
+GoRouter router = GoRouter(
+  navigatorKey: navigatorKey,
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => HomeView(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginView(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => OnboardingView(),
+    ),
+    GoRoute(
+      path: '/categories',
+      builder: (context, state) {
+        return CategoriesView(
+          viewModel: CategoriesViewModel(repo: context.read()),
+        );
+      },
+      routes: [
+        GoRoute(
+          path: '/detail',
+          builder: (context, state) => CategoriesDetailView(
+            viewModel: CategoriesDetailViewModel(
+              repo: context.read(),
+              catsRepo: context.read(),
+              selected: state.extra as CategoryModel,
             ),
           ),
-        ],
-      ),
-      GoRoute(
-        path: '/recipe',
-        builder: (context, state) => RecipeDetailView(
-          viewModel: RecipeDetailViewModel(
-            repo: context.read(),
-            selected: state.extra as RecipeModelSmall,
-            from: state.uri.queryParameters['from'] as String,
-          ),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/recipe',
+      builder: (context, state) => RecipeDetailView(
+        viewModel: RecipeDetailViewModel(
+          repo: context.read(),
+          selected: state.extra as RecipeModelSmall,
+          from: state.uri.queryParameters['from'] as String,
         ),
       ),
-      GoRoute(
-        path: '/profile/me',
-        builder: (context, state) => ProfileView(
-          vm: ProfileViewModel(
-            repo: context.read(),
-            recipeRepo: context.read(),
-          ),
-        ),
-      ),
-    ],
-    redirect: (context, state) {
-      // final isAuthenticated = vm.isAuthenticated;
-      // final isLoggingIn = state.uri.toString() == '/login';
-      //
-      // if (!isAuthenticated && !isLoggingIn) {
-      //   return '/login';
-      // }
-      //
-      // if (isAuthenticated && isLoggingIn) {
-      //   return '/';
-      // }
+    ),
+    GoRoute(
+      path: '/profile/me',
+      builder: (context, state) => ProfileView(),
+    ),
+  ],
+  redirect: (context, state) {
+    // final isAuthenticated = vm.isAuthenticated;
+    // final isLoggingIn = state.uri.toString() == '/login';
+    //
+    // if (!isAuthenticated && !isLoggingIn) {
+    //   return '/login';
+    // }
+    //
+    // if (isAuthenticated && isLoggingIn) {
+    //   return '/';
+    // }
 
-      return null;
-    },
-  );
-}
+    return null;
+  },
+);
 
 class RecipeApp extends StatelessWidget {
   const RecipeApp({super.key});
@@ -127,15 +118,10 @@ class RecipeApp extends StatelessWidget {
         Provider(create: (context) => AuthRepository(client: context.read())),
         ChangeNotifierProvider(create: (context) => AuthViewModel(authRepository: context.read())),
       ],
-      child: Builder(
-        builder: (context) {
-          final vm = context.watch<AuthViewModel>();
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: appThemeData,
-            routerConfig: createRouter(context, vm),
-          );
-        },
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        theme: appThemeData,
+        routerConfig: router,
       ),
     );
   }

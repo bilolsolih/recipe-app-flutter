@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/categories_detail/data/models/recipe_model_small.dart';
 import 'package:recipe_app/core/core.dart';
-import 'package:recipe_app/home/presentation/pages/home_view_model.dart';
+import 'package:recipe_app/home/presentation/manager/home_view_model.dart';
 import 'package:recipe_app/home/presentation/widgets/your_recipe_item.dart';
 
 class YourRecipesSectionHome extends StatelessWidget {

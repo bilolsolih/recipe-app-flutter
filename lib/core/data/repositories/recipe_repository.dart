@@ -9,6 +9,14 @@ class RecipeRepository {
   List<RecipeModelSmall> yourRecipes = [];
   List<RecipeModelSmall> recentRecipes = [];
 
+  RecipeModelSmall? trendingRecipe;
+
+  Future<RecipeModelSmall?> fetchTrendingRecipe() async {
+    var rawRecipe = await client.fetchTrendingRecipe();
+    trendingRecipe = RecipeModelSmall.fromJson(rawRecipe);
+    return trendingRecipe;
+  }
+
   Future<List<RecipeModelSmall>> fetchYourRecipes(int limit) async {
     // if (yourRecipes.isNotEmpty) return yourRecipes;
     var rawRecipes = await client.fetchYourRecipes(limit);

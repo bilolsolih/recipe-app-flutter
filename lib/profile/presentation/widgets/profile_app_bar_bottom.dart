@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_app/core/core.dart';
-import 'package:recipe_app/profile/presentation/pages/profile_app_bar_stats_column.dart';
+import 'package:recipe_app/profile/presentation/manager/profile_view_model.dart';
+import 'package:recipe_app/profile/presentation/widgets/profile_app_bar_stats_column.dart';
 
 class ProfileAppBarBottom extends StatelessWidget implements PreferredSizeWidget {
-  const ProfileAppBarBottom({
-    super.key,
-  });
+  const ProfileAppBarBottom({super.key});
 
   @override
   Size get preferredSize => Size(double.infinity, 130);
 
   @override
   Widget build(BuildContext context) {
+    final myProfile = context.select((ProfileViewModel vm) => vm.myProfile);
     return Column(
-    spacing: 18,
+      spacing: 18,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,25 +43,19 @@ class ProfileAppBarBottom extends StatelessWidget implements PreferredSizeWidget
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ProfileAppBarStatsColumn(number: 60, label: "recipes"),
+              ProfileAppBarStatsColumn(number: myProfile!.recipes, label: "recipes"),
               Container(width: 2, height: 26, color: AppColors.pink),
-              ProfileAppBarStatsColumn(number: 120, label: "Following"),
+              ProfileAppBarStatsColumn(number: myProfile.following, label: "Following"),
               Container(width: 2, height: 26, color: AppColors.pink),
-              ProfileAppBarStatsColumn(number: 250, label: "Followers"),
+              ProfileAppBarStatsColumn(number: myProfile.followers, label: "Followers"),
             ],
           ),
         ),
         TabBar(
           indicatorSize: TabBarIndicatorSize.tab,
           tabs: [
-            Text(
-              "Recipe",
-              style: TextStyle(fontSize: 12),
-            ),
-            Text(
-              "Favorites",
-              style: TextStyle(fontSize: 12),
-            ),
+            Text("Recipe", style: TextStyle(fontSize: 12)),
+            Text("Favorites", style: TextStyle(fontSize: 12)),
           ],
         ),
       ],

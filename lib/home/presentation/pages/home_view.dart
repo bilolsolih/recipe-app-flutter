@@ -7,7 +7,7 @@ import '../widgets/recipe_home_app_bar.dart';
 import '../widgets/top_chefs_section_home.dart';
 import '../widgets/trending_recipe/trending_recipe_section_home.dart';
 import '../widgets/your_recipes_section_home.dart';
-import 'home_view_model.dart';
+import '../manager/home_view_model.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

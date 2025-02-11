@@ -6,7 +6,15 @@ import 'package:recipe_app/home/presentation/widgets/trending_recipe/trending_re
 class TrendingRecipeBottom extends StatelessWidget {
   const TrendingRecipeBottom({
     super.key,
+    required this.title,
+    required this.desc,
+    required this.rating,
+    required this.time,
   });
+
+  final String title, desc;
+  final num rating;
+  final int time;
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +32,15 @@ class TrendingRecipeBottom extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TrendingRecipeTitleHome(),
-              RecipeTime(time: 30, iconColor: AppColors.pinkSub),
+              TrendingRecipeTitleHome(title: title),
+              RecipeTime(time: time, iconColor: AppColors.pinkSub),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TrendingRecipeDescHome(),
-              RecipeRating(rating: 5, iconColor: AppColors.pinkSub),
+              TrendingRecipeDescHome(desc: desc),
+              RecipeRating(rating: rating, iconColor: AppColors.pinkSub),
             ],
           ),
         ],

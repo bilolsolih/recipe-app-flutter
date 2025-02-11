@@ -5,7 +5,7 @@ import 'package:recipe_app/core/core.dart';
 import 'package:recipe_app/core/presentation/widgets/categories_horizontal_appbar_bottom.dart';
 import 'package:recipe_app/home/presentation/widgets/recipe_home_app_bar_title.dart';
 
-import '../pages/home_view_model.dart';
+import '../manager/home_view_model.dart';
 
 class RecipeHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RecipeHomeAppBar({

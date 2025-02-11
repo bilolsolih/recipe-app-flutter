@@ -1,58 +1,12 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:recipe_app/core/secure_storage.dart';
-
-class DioInstance {
-  final Dio dio = Dio(BaseOptions(baseUrl: "http://192.168.1.80/api/v1"));
-
-  DioInstance() {
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final token = await SecureStorage.getToken();
-          if (token != null) {
-            options.headers['Authorization'] = "Bearer $token";
-          }
-          return handler.next(options);
-        },
-        onError: (error, handler) async {
-          if (error.response?.statusCode == 401) {
-            final credentials = await SecureStorage.getCredentials();
-            final login = credentials['login'];
-            final password = credentials['password'];
-            if (login == null || password == null) {
-              throw Exception("Credentials not found");
-            }
-            var response = await dio.post(
-              '/auth/login',
-              data: json.encode({"login": login, "password": password}),
-            );
-
-            if (response.statusCode == 200) {
-              final data = Map<String, String>.from(response.data);
-              final newToken = data['accessToken']!;
-              await SecureStorage.deleteToken();
-              await SecureStorage.saveToken(newToken);
-              error.requestOptions.headers['Authorization'] = "Bearer $newToken";
-            } else {
-              throw Exception("User not found");
-            }
-          }
-          return handler.next(error);
-        },
-      ),
-    );
-  }
-}
+import 'package:recipe_app/core/interceptor.dart';
 
 class ApiClient {
-  Dio dio = Dio(
+  final Dio dio = Dio(
     BaseOptions(
-      baseUrl: "http://10.10.2.73/api/v1",
-      validateStatus: (status) => true,
+      baseUrl: "http://192.168.1.80/api/v1",
     ),
-  );
+  )..interceptors.add(AuthInterceptor());
 
   Future<String> login(String login, String password) async {
     var response = await dio.post(
@@ -75,19 +29,12 @@ class ApiClient {
   }
 
   Future<dynamic> fetchTrendingRecipe() async {
-    return {
-      "id": 3,
-      "title": "Salami and cheese pizza",
-      "description": "This is a quick overview of the ingredients for the recipe",
-      "photo": "assets/images/salami_pizza.png",
-      "timeRequired": 30,
-      "rating": 5.0,
-      "isLiked": true,
-    };
+    var response = await dio.get('/recipes/trending-recipe');
+    return response.data;
   }
 
   Future<List<dynamic>> fetchYourRecipes(int limit) async {
-    var response = await dio.get('/recipes/list?UserId=1&Limit=$limit');
+    var response = await dio.get('/recipes/my-recipes?Limit=$limit');
     List<dynamic> data = response.data;
     return data;
   }
@@ -134,7 +81,7 @@ class ApiClient {
   }
 
   Future<dynamic> fetchMyProfile() async {
-    var response = await dio.get('/auth/details/3');
+    var response = await dio.get('/auth/me');
 
     return response.data;
   }
