@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'auth_repository.dart';
+import 'data/repositories/auth_repository.dart';
 
 class AuthViewModel extends ChangeNotifier {
   AuthViewModel({required AuthRepository authRepository}) : _authRepository = authRepository;

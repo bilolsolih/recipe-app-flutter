@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:recipe_app/core/auth_repository.dart';
+import 'package:recipe_app/core/data/repositories/auth_repository.dart';
 
 import '../main.dart';
 

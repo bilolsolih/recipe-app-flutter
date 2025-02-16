@@ -1,4 +1,4 @@
-export 'auth_repository.dart';
+export 'data/repositories/auth_repository.dart';
 export 'auth_view_model.dart';
 export 'client.dart';
 export 'data/repositories/recipe_repository.dart';
