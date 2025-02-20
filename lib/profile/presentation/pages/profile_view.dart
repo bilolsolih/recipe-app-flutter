@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/core.dart';
+import 'package:recipe_app/core/routing/routes.dart';
 import 'package:recipe_app/profile/presentation/widgets/profile_app_bar.dart';
 import 'package:recipe_app/profile/presentation/manager/profile_view_model.dart';
 
@@ -46,7 +47,7 @@ class ProfileScaffold extends StatelessWidget {
             ),
             itemBuilder: (context, index) => RecipeItem(
               recipe: recipes[index],
-              goBackRoute: '/profile/me',
+              goBackRoute: Routes.myProfile,
             ),
           ),
           SizedBox.shrink(),

@@ -3,19 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/core/data/repositories/auth_repository.dart';
 
-import '../main.dart';
+import 'routing/router.dart';
+import 'routing/routes.dart';
+
 
 class AuthInterceptor extends Interceptor {
-  late AuthRepository _repo;
   final Dio _dio = Dio();
 
-  AuthInterceptor()  {
-    _repo = navigatorKey.currentContext!.read<AuthRepository>();
-  }
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final jwt = _repo.jwt;
+    final jwt = navigatorKey.currentContext!.read<AuthRepository>().jwt;
     if (jwt != null) {
       options.headers['Authorization'] = "Bearer $jwt";
     }
@@ -26,9 +24,9 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      final success = await _repo.refreshToken();
+      final success = await navigatorKey.currentContext!.read<AuthRepository>().refreshToken();
       if (success) {
-        err.requestOptions.headers['Authorization'] = "Bearer ${_repo.jwt}";
+        err.requestOptions.headers['Authorization'] = "Bearer ${navigatorKey.currentContext!.read<AuthRepository>().jwt}";
         return handler.resolve(
           await _dio.request(
             err.requestOptions.baseUrl + err.requestOptions.path,
@@ -41,8 +39,8 @@ class AuthInterceptor extends Interceptor {
           ),
         );
       } else {
-        await _repo.logout();
-        navigatorKey.currentContext!.go('/login');
+        await navigatorKey.currentContext!.read<AuthRepository>().logout();
+        navigatorKey.currentContext!.go(Routes.login);
         return handler.reject(err);
       }
     }

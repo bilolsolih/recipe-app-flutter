@@ -2,11 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:recipe_app/core/interceptor.dart';
 
 class ApiClient {
-  final Dio dio = Dio(
-    BaseOptions(
-      baseUrl: "http://192.168.1.80/api/v1",
-    ),
-  )..interceptors.add(AuthInterceptor());
+  ApiClient() {
+    dio = Dio(BaseOptions(baseUrl: "http://192.168.1.80/api/v1"));
+    dio.interceptors.add(AuthInterceptor());
+  }
+
+  late final Dio dio;
 
   Future<String> login(String login, String password) async {
     var response = await dio.post(

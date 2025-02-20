@@ -24,7 +24,6 @@ class SecureStorage {
       "login": await _storage.read(key: loginKey),
       "password": await _storage.read(key: passwordKey),
     };
-
     return credentials;
   }
 

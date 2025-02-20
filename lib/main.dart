@@ -29,75 +29,8 @@ void main() {
   runApp(RecipeApp());
 }
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 
-GoRouter router = GoRouter(
-  navigatorKey: navigatorKey,
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => HomeView(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => LoginView(),
-    ),
-    GoRoute(
-      path: '/onboarding',
-      builder: (context, state) => OnboardingView(),
-    ),
-    GoRoute(
-      path: '/categories',
-      builder: (context, state) {
-        return CategoriesView(
-          viewModel: CategoriesViewModel(repo: context.read()),
-        );
-      },
-      routes: [
-        GoRoute(
-          path: '/detail',
-          builder: (context, state) => CategoriesDetailView(
-            viewModel: CategoriesDetailViewModel(
-              repo: context.read(),
-              catsRepo: context.read(),
-              selected: state.extra as CategoryModel,
-            ),
-          ),
-        ),
-      ],
-    ),
-    GoRoute(
-      path: '/recipe',
-      builder: (context, state) => RecipeDetailView(
-        viewModel: RecipeDetailViewModel(
-          repo: context.read(),
-          selected: state.extra as RecipeModelSmall,
-          from: state.uri.queryParameters['from'] as String,
-        ),
-      ),
-    ),
-    GoRoute(
-      path: '/profile/me',
-      builder: (context, state) => ProfileView(),
-    ),
-  ],
-  redirect: (context, state) {
-    // final isAuthenticated = vm.isAuthenticated;
-    // final isLoggingIn = state.uri.toString() == '/login';
-    //
-    // if (!isAuthenticated && !isLoggingIn) {
-    //   return '/login';
-    // }
-    //
-    // if (isAuthenticated && isLoggingIn) {
-    //   return '/';
-    // }
-
-    return null;
-  },
-);
 
 class RecipeApp extends StatelessWidget {
   const RecipeApp({super.key});

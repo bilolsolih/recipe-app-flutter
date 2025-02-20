@@ -4,12 +4,13 @@ import 'package:recipe_app/categories_detail/data/models/recipe_model_small.dart
 import 'package:recipe_app/core/core.dart';
 import 'package:recipe_app/core/presentation/widgets/recipe_item_image.dart';
 import 'package:recipe_app/core/presentation/widgets/recipe_item_info.dart';
+import 'package:recipe_app/core/routing/routes.dart';
 
 class RecipeItem extends StatelessWidget {
   const RecipeItem({
     super.key,
     required this.recipe,
-    this.goBackRoute = '/'
+    this.goBackRoute = Routes.home,
   });
 
   final RecipeModelSmall recipe;
@@ -22,7 +23,7 @@ class RecipeItem extends StatelessWidget {
         width: 169 * AppSizes.wRatio,
         height: 226 * AppSizes.hRatio,
         child: GestureDetector(
-          onTap: ()=> context.go('/recipe?from=$goBackRoute', extra: recipe),
+          onTap: ()=> context.go('${Routes.recipeDetail}?from=$goBackRoute', extra: recipe),
           child: RecipeItemStack(recipe: recipe),
         ),
       ),
